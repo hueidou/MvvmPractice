@@ -1,0 +1,35 @@
+﻿<Window x:Class="MvvmPractice.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MvvmPractice"
+        mc:Ignorable="d"
+        Title="{Binding Title}" Height="350" Width="525"
+        DataContext="{Binding Source={StaticResource Locator}, Path=Main}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0">笔记本列表</TextBlock>
+        <TextBlock Grid.Row="0" Grid.Column="1">笔记列表</TextBlock>
+
+        <ListBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding NoteBooks}" DisplayMemberPath="Name">
+            <ListBox.ContextMenu>
+                <ContextMenu>
+                    <MenuItem x:Name="AddNoteBook" Header="添加笔记本" Command="{Binding AddNoteBook}"></MenuItem>
+                    <MenuItem x:Name="DelNoteBook" Header="删除笔记本" Command="{Binding DelNoteBook}" CommandParameter="{Binding Path=CurrentNoteBook}"></MenuItem>
+                </ContextMenu>
+            </ListBox.ContextMenu>
+        </ListBox>
+        <ListBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding CurrentNoteBook.Notes}" DisplayMemberPath="Title"></ListBox>
+    </Grid>
+
+</Window>
