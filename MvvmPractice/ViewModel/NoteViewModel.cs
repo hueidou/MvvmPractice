@@ -5,19 +5,29 @@ using System.Linq;
 using System.Text;
 using GalaSoft.MvvmLight;
 
+/*
+  ViewModel需要继承ViewModelBase（来自MvvmLight库）
+*/
+
 namespace MvvmPractice.ViewModel
 {
+    /// <summary>
+    /// 笔记ViewModel
+    /// </summary>
     public class NoteViewModel : ViewModelBase
     {
+        #region 字段
         Note _note;
+        #endregion
 
+        #region 属性
+        /// <summary>
+        /// 笔记
+        /// </summary>
         public Note Note
         {
             get { return _note; }
-            set
-            {
-                _note = value;
-            }
+            set { _note = value; }
         }
 
         /// <summary>
@@ -51,5 +61,6 @@ namespace MvvmPractice.ViewModel
                 }
             }
         }
+        #endregion
     }
 }

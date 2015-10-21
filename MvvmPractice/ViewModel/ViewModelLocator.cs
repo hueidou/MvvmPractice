@@ -1,15 +1,15 @@
 /*
-  In App.xaml:
+  ViewModel定位器，包含了所有ViewModel的引用，作用是在xaml中提供这些ViewModel的入口点。
+
+  在App.xaml中：
   <Application.Resources>
-      <vm:ViewModelLocator xmlns:vm="clr-namespace:MvvmPractice"
-                           x:Key="Locator" />
+      <vm:ViewModelLocator xmlns:vm="clr-namespace:MvvmPractice" x:Key="Locator" />
   </Application.Resources>
-  
-  In the View:
+
+  在视图中：
   DataContext="{Binding Source={StaticResource Locator}, Path=ViewModelName}"
 
-  You can also use Blend to do all this with the tool's support.
-  See http://www.galasoft.ch/mvvm
+  如果需要添加其他ViewModel的入口，可参考MainViewModel的如下代码。
 */
 
 using GalaSoft.MvvmLight;
@@ -45,6 +45,9 @@ namespace MvvmPractice.ViewModel
             SimpleIoc.Default.Register<MainViewModel>();
         }
 
+        /// <summary>
+        /// MainViewModel的实例引用入口
+        /// </summary>
         public MainViewModel Main
         {
             get
@@ -52,7 +55,7 @@ namespace MvvmPractice.ViewModel
                 return ServiceLocator.Current.GetInstance<MainViewModel>();
             }
         }
-        
+
         public static void Cleanup()
         {
             // TODO Clear the ViewModels

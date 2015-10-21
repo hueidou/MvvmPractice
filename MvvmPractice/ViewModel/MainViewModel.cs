@@ -4,35 +4,30 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Linq;
 
+/*
+  ViewModel需要继承ViewModelBase（来自MvvmLight库）
+*/
+
 namespace MvvmPractice.ViewModel
 {
     /// <summary>
-    /// This class contains properties that the main View can data bind to.
-    /// <para>
-    /// Use the <strong>mvvminpc</strong> snippet to add bindable properties to this ViewModel.
-    /// </para>
-    /// <para>
-    /// You can also use Blend to data bind with the tool's support.
-    /// </para>
-    /// <para>
-    /// See http://www.galasoft.ch/mvvm
-    /// </para>
+    /// MainViewModel
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
+        #region 字段
         string _title;
         ObservableCollection<NoteBookViewModel> _noteBooks = new ObservableCollection<NoteBookViewModel>();
         NoteBookViewModel _currentNoteBook;
+        #endregion
 
+        #region 属性
         /// <summary>
         /// 标题
         /// </summary>
         public string Title
         {
-            get
-            {
-                return _title;
-            }
+            get { return _title; }
             set
             {
                 if (_title != value)
@@ -43,12 +38,18 @@ namespace MvvmPractice.ViewModel
             }
         }
 
+        /// <summary>
+        /// 笔记本集合
+        /// </summary>
         public ObservableCollection<NoteBookViewModel> NoteBooks
         {
             get { return _noteBooks; }
             set { _noteBooks = value; }
         }
 
+        /// <summary>
+        /// 当前笔记本
+        /// </summary>
         public NoteBookViewModel CurrentNoteBook
         {
             get { return _currentNoteBook; }
@@ -57,7 +58,9 @@ namespace MvvmPractice.ViewModel
                 _currentNoteBook = value;
             }
         }
+        #endregion
 
+        #region 构造方法
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
@@ -75,8 +78,13 @@ namespace MvvmPractice.ViewModel
 
             AddNoteBookExecute("初始化记事本");
         }
+        #endregion
 
-        // 添加笔记本
+        #region 命令
+        /// <summary>
+        /// 添加笔记本
+        /// </summary>
+        /// <param name="noteBookName">笔记本名称</param>
         void AddNoteBookExecute(string noteBookName)
         {
             if (_noteBooks == null)
@@ -101,7 +109,10 @@ namespace MvvmPractice.ViewModel
             }
         }
 
-        // 删除笔记本
+        /// <summary>
+        /// 删除笔记本
+        /// </summary>
+        /// <param name="noteBook">笔记本</param>
         void DelNoteBookExecute(NoteBookViewModel noteBook)
         {
             if (_noteBooks == null)
@@ -125,7 +136,10 @@ namespace MvvmPractice.ViewModel
             }
         }
 
-        // 选择笔记本
+        /// <summary>
+        /// 选择笔记本
+        /// </summary>
+        /// <param name="noteBookName">笔记本名称</param>
         void SelectNoteBookExecute(string noteBookName)
         {
             if (_noteBooks == null)
@@ -149,5 +163,6 @@ namespace MvvmPractice.ViewModel
                 return new RelayCommand<string>(SelectNoteBookExecute, CanSelectNoteBookExecute);
             }
         }
+        #endregion
     }
 }

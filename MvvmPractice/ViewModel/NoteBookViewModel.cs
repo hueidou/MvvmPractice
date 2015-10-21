@@ -7,8 +7,15 @@ using GalaSoft.MvvmLight;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 
+/*
+  ViewModel需要继承ViewModelBase（来自MvvmLight库）
+*/
+
 namespace MvvmPractice.ViewModel
 {
+    /// <summary>
+    /// 笔记本ViewModel
+    /// </summary>
     public class NoteBookViewModel : ViewModelBase
     {
         #region 字段
@@ -16,6 +23,7 @@ namespace MvvmPractice.ViewModel
         string _name;
         #endregion
 
+        #region 属性
         /// <summary>
         /// 笔记
         /// </summary>
@@ -40,9 +48,13 @@ namespace MvvmPractice.ViewModel
                 }
             }
         }
+        #endregion
 
-
-        // 添加笔记本
+        #region 命令
+        /// <summary>
+        /// 添加笔记本
+        /// </summary>
+        /// <param name="title"></param>
         void AddNoteExecute(string title)
         {
             if (_notes == null)
@@ -66,7 +78,10 @@ namespace MvvmPractice.ViewModel
             }
         }
 
-        // 删除笔记本
+        /// <summary>
+        /// 删除笔记本
+        /// </summary>
+        /// <param name="title"></param>
         void DelNoteExecute(string title)
         {
             if (_notes == null)
@@ -90,5 +105,6 @@ namespace MvvmPractice.ViewModel
                 return new RelayCommand<string>(DelNoteExecute, CanDelNoteExecute);
             }
         }
+        #endregion
     }
 }

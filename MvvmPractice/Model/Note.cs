@@ -6,21 +6,24 @@ using GalaSoft.MvvmLight;
 
 namespace MvvmPractice.Model
 {
+    /// <summary>
+    /// 笔记
+    /// </summary>
     public class Note
     {
+        #region 字段
         string _title;
         string _content;
+        #endregion
 
+        #region 属性
         /// <summary>
         /// 标题
         /// </summary>
         public string Title
         {
             get { return _title; }
-            set
-            {
-                _title = value;
-            }
+            set { _title = value; }
         }
 
         /// <summary>
@@ -29,10 +32,8 @@ namespace MvvmPractice.Model
         public string Content
         {
             get { return _content; }
-            set
-            {
-                _content = value;
-            }
+            set { _content = value; }
         }
+        #endregion
     }
 }
