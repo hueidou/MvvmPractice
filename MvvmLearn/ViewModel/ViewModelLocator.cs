@@ -16,7 +16,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
 
-namespace MvvmPractice.ViewModel
+namespace MvvmLearn.ViewModel
 {
     /// <summary>
     /// This class contains static references to all the view models in the
@@ -52,13 +52,13 @@ namespace MvvmPractice.ViewModel
             *
             * 这里是将MainViewModel类型注册，以在将来提供其实例
             */
-            SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<SimpleViewModel>();
         }
 
         /// <summary>
         /// MainViewModel的实例引用入口
         /// </summary>
-        public MainViewModel Main
+        public SimpleViewModel Simple
         {
             get
             {
@@ -67,7 +67,23 @@ namespace MvvmPractice.ViewModel
                 * 
                 * 这里是获取了MainViewModel贮存在IOC中的实例
                 */
-                return ServiceLocator.Current.GetInstance<MainViewModel>();
+                return ServiceLocator.Current.GetInstance<SimpleViewModel>();
+            }
+        }
+
+        /// <summary>
+        /// MainViewModel的实例引用入口
+        /// </summary>
+        public SimpleViewModel Simple2
+        {
+            get
+            {
+                /*
+                * ServiceLocator已指定SimpleIoc作为IOC来贮存对象实例
+                * 
+                * 这里是获取了MainViewModel贮存在IOC中的实例
+                */
+                return ServiceLocator.Current.GetInstance<SimpleViewModel>("Simple2");
             }
         }
 
