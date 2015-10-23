@@ -14,32 +14,30 @@ namespace MvvmLearn.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class SimpleViewModel : ViewModelBase
+    public class MainViewModel : ViewModelBase
     {
-        string _text;
+        string _title;
 
         /// <summary>
         /// 文本
         /// </summary>
-        public string Text
+        public string Title
         {
-            get { return _text; }
+            get { return _title; }
             set
             {
-                if (_text != value)
+                if (_title != value)
                 {
-                    _text = value;
-                    RaisePropertyChanged("Text");
+                    _title = value;
+                    RaisePropertyChanged("Title");
                 }
             }
         }
 
-        static int count;
-
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
-        public SimpleViewModel()
+        public MainViewModel()
         {
             ////if (IsInDesignMode)
             ////{
@@ -49,7 +47,8 @@ namespace MvvmLearn.ViewModel
             ////{
             ////    // Code runs "for real"
             ////}
-            Text = "text" + ++count;
+
+            Title = "MainViewModel标题";
         }
     }
 }

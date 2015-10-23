@@ -62,5 +62,10 @@ namespace MvvmPractice.ViewModel
             }
         }
         #endregion
+
+        public NoteViewModel()
+        {
+            _note = new Note { Title="", Content="" };
+        }
     }
 }

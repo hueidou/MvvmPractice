@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:MvvmLearn"
         xmlns:ViewModel="clr-namespace:MvvmLearn.ViewModel" x:Class="MvvmLearn.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Height="350" Width="525"
+        DataContext="{Binding Source={StaticResource Locator}, Path=Main}"
+        Title="{Binding Title}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>

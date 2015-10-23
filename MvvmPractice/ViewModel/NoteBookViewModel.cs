@@ -6,6 +6,8 @@ using System.Text;
 using GalaSoft.MvvmLight;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
+using MvvmPractice.Messages;
+using GalaSoft.MvvmLight.Messaging;
 
 /*
   ViewModel需要继承ViewModelBase（来自MvvmLight库）
@@ -55,17 +57,19 @@ namespace MvvmPractice.ViewModel
         /// 添加笔记本
         /// </summary>
         /// <param name="title"></param>
-        void AddNoteExecute(string title)
+        void AddNoteExecute(NoteViewModel note)
         {
             if (_notes == null)
             {
                 return;
             }
 
-            _notes.Add(new NoteViewModel { Title = title });
+            _notes.Add(note);
+
+            Messenger.Default.Send<NoteEditDoneMessage>(null);
         }
 
-        bool CanAddNoteExecute(string title)
+        bool CanAddNoteExecute(NoteViewModel note)
         {
             return true;
         }
@@ -74,7 +78,7 @@ namespace MvvmPractice.ViewModel
         {
             get
             {
-                return new RelayCommand<string>(AddNoteExecute, CanAddNoteExecute);
+                return new RelayCommand<NoteViewModel>(AddNoteExecute, CanAddNoteExecute);
             }
         }
 
@@ -82,18 +86,17 @@ namespace MvvmPractice.ViewModel
         /// 删除笔记本
         /// </summary>
         /// <param name="title"></param>
-        void DelNoteExecute(string title)
+        void DelNoteExecute(NoteViewModel note)
         {
             if (_notes == null)
             {
                 return;
             }
-
-            var noteBook = _notes.Single(model => model.Title == title);
-            _notes.Remove(noteBook);
+            
+            _notes.Remove(note);
         }
 
-        bool CanDelNoteExecute(string title)
+        bool CanDelNoteExecute(NoteViewModel note)
         {
             return true;
         }
@@ -102,7 +105,7 @@ namespace MvvmPractice.ViewModel
         {
             get
             {
-                return new RelayCommand<string>(DelNoteExecute, CanDelNoteExecute);
+                return new RelayCommand<NoteViewModel>(DelNoteExecute, CanDelNoteExecute);
             }
         }
         #endregion

@@ -3,6 +3,8 @@ using GalaSoft.MvvmLight.Command;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Linq;
+using GalaSoft.MvvmLight.Messaging;
+using MvvmPractice.Messages;
 
 /*
   ViewModel需要继承ViewModelBase（来自MvvmLight库）
@@ -19,6 +21,7 @@ namespace MvvmPractice.ViewModel
         string _title;
         ObservableCollection<NoteBookViewModel> _noteBooks = new ObservableCollection<NoteBookViewModel>();
         NoteBookViewModel _currentNoteBook;
+        NoteViewModel _currentNote;
         #endregion
 
         #region 属性
@@ -55,7 +58,27 @@ namespace MvvmPractice.ViewModel
             get { return _currentNoteBook; }
             set
             {
-                _currentNoteBook = value;
+                if (_currentNoteBook != value)
+                {
+                    _currentNoteBook = value;
+                    RaisePropertyChanged("CurrentNoteBook");
+                }
+            }
+        }
+
+        /// <summary>
+        /// 当前笔记本
+        /// </summary>
+        public NoteViewModel CurrentNote
+        {
+            get { return _currentNote; }
+            set
+            {
+                if (_currentNote != value)
+                {
+                    _currentNote = value;
+                    RaisePropertyChanged("CurrentNote");
+                }
             }
         }
         #endregion
@@ -66,17 +89,24 @@ namespace MvvmPractice.ViewModel
         /// </summary>
         public MainViewModel()
         {
-            ////if (IsInDesignMode)
-            ////{
-            ////    // Code runs in Blend --> create design time data.
-            ////}
-            ////else
-            ////{
-            ////    // Code runs "for real"
-            ////}
-            Title = "记事本";
+            if (IsInDesignMode)
+            {
+                // Code runs in Blend --> create design time data.
+                _currentNoteBook = new NoteBookViewModel();
+                _currentNoteBook.Notes.Add(new NoteViewModel { Note = { Title = "笔记1", Content = "内容1" } });
+                _currentNoteBook.Notes.Add(new NoteViewModel { Note = { Title = "笔记2", Content = "内容2" } });
+            }
+            else
+            {
 
-            AddNoteBookExecute("初始化记事本");
+            }
+            Title = "笔记本";
+
+            var noteBook = new NoteBookViewModel { Name = "笔记本1" };
+
+            noteBook.Notes.Add(new NoteViewModel { Note = new Model.Note { Title = "笔记1", Content = "内容1" } });
+            noteBook.Notes.Add(new NoteViewModel { Note = new Model.Note { Title = "笔记2", Content = "内容2" } });
+            NoteBooks.Add(noteBook);
         }
         #endregion
 
@@ -85,18 +115,20 @@ namespace MvvmPractice.ViewModel
         /// 添加笔记本
         /// </summary>
         /// <param name="noteBookName">笔记本名称</param>
-        void AddNoteBookExecute(string noteBookName)
+        void AddNoteBookExecute(NoteBookViewModel noteBook)
         {
             if (_noteBooks == null)
             {
                 return;
             }
-
-            var noteBook = new NoteBookViewModel { Name = noteBookName };
+            
             _noteBooks.Add(noteBook);
+
+            // 发送笔记本编辑完成消息
+            Messenger.Default.Send<NoteBookEditDoneMessage>(null);
         }
 
-        bool CanAddNoteBookExecute(string noteBookName)
+        bool CanAddNoteBookExecute(NoteBookViewModel noteBook)
         {
             return true;
         }
@@ -105,7 +137,7 @@ namespace MvvmPractice.ViewModel
         {
             get
             {
-                return new RelayCommand<string>(AddNoteBookExecute, CanAddNoteBookExecute);
+                return new RelayCommand<NoteBookViewModel>(AddNoteBookExecute, CanAddNoteBookExecute);
             }
         }
 

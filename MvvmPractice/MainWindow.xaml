@@ -9,33 +9,77 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:conv="clr-namespace:MvvmPractice.Converter"
         xmlns:local="clr-namespace:MvvmPractice"
         mc:Ignorable="d"
         Title="{Binding Title}" Height="350" Width="525"
-        DataContext="{Binding Source={StaticResource Locator}, Path=Main}">
+        DataContext="{Binding Source={StaticResource Locator}, Path=Main}" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <conv:ObjectToBooleanConverter x:Key="objectToBooleanConverter"/>
+        <Style x:Key="title" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20"></Setter>
+            <Setter Property="Foreground" Value="Blue"></Setter>
+        </Style>
+
+        <SolidColorBrush x:Key="border" Color="Silver" ></SolidColorBrush>
+        <DataTemplate x:Key="DataTemplate1">
+            <Grid/>
+        </DataTemplate>
+    </Window.Resources>
+    <!-- Window.Content只能设置一次，一般设置一个布局控件 -->
+
+    <!-- 网格布局 -->
     <Grid>
+        <!-- 行和列的定义 -->
         <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
             <RowDefinition Height="30"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.Column="0">笔记本列表</TextBlock>
-        <TextBlock Grid.Row="0" Grid.Column="1">笔记列表</TextBlock>
+        <!-- 文本Label -->
+        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource title}">笔记本列表</TextBlock>
+        <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource title}">笔记列表</TextBlock>
 
-        <ListBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding NoteBooks}" DisplayMemberPath="Name">
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding CurrentNoteBook.Name, StringFormat=当前选中：{0}}"></TextBlock>
+        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding CurrentNote.Title, StringFormat=当前选中：{0}}"></TextBlock>
+
+
+        <!-- 左侧笔记本列表 -->
+        <ListBox x:Name="listBox" Grid.Row="2" Grid.Column="0" 
+                  ItemsSource="{Binding NoteBooks}" DisplayMemberPath="Name"
+                 SelectedValue="{Binding CurrentNoteBook, Mode=OneWayToSource}">
+            <!-- ListBox的上下文菜单（右键菜单） -->
             <ListBox.ContextMenu>
+                <!-- ContextMenu实例  Header="删除笔记本"-->
                 <ContextMenu>
-                    <MenuItem x:Name="AddNoteBook" Header="添加笔记本" Command="{Binding AddNoteBook}"></MenuItem>
-                    <MenuItem x:Name="DelNoteBook" Header="删除笔记本" Command="{Binding DelNoteBook}" CommandParameter="{Binding Path=CurrentNoteBook}"></MenuItem>
+                    <MenuItem Header="添加笔记本" Click="OpenNoteBookEdit_Click"></MenuItem>
+                    <MenuItem Header="删除笔记本" Command="{Binding DelNoteBook, Mode=OneWay}" 
+                              CommandParameter="{Binding CurrentNoteBook, Mode=OneWay}"></MenuItem>
+
                 </ContextMenu>
             </ListBox.ContextMenu>
         </ListBox>
-        <ListBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding CurrentNoteBook.Notes}" DisplayMemberPath="Title"></ListBox>
+
+        <!--
+          右侧笔记列表 
+          展示笔记的标题和内容
+        -->
+        <ListView Grid.Row="2" Grid.Column="1" 
+                  ItemsSource="{Binding CurrentNoteBook.Notes}" DisplayMemberPath="Title"
+                  SelectedValue="{Binding CurrentNote, Mode=OneWayToSource}">
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem x:Name="OpenNoteEdit" Header="添加笔记" Click="OpenNoteEdit_Click"></MenuItem>
+                    <MenuItem Header="删除笔记" Command="{Binding Source={StaticResource Locator},Path=Main.CurrentNoteBook.DelNote}"
+                              CommandParameter="{Binding CurrentNote, Mode=OneWay}"></MenuItem>
+                </ContextMenu>
+            </ListView.ContextMenu>
+        </ListView>
     </Grid>
 
 </Window>

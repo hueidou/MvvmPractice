@@ -1,15 +1,15 @@
 /*
-  ViewModel¶¨Î»Æ÷£¬°üº¬ÁËËùÓĞViewModelµÄÒıÓÃ£¬×÷ÓÃÊÇÔÚxamlÖĞÌá¹©ÕâĞ©ViewModelµÄÈë¿Úµã¡£
+  ViewModelå®šä½å™¨ï¼ŒåŒ…å«äº†æ‰€æœ‰ViewModelçš„å¼•ç”¨ï¼Œä½œç”¨æ˜¯åœ¨xamlä¸­æä¾›è¿™äº›ViewModelçš„å…¥å£ç‚¹ã€‚
 
-  ÔÚApp.xamlÖĞ£º
+  åœ¨App.xamlä¸­ï¼š
   <Application.Resources>
       <vm:ViewModelLocator xmlns:vm="clr-namespace:MvvmPractice" x:Key="Locator" />
   </Application.Resources>
 
-  ÔÚÊÓÍ¼ÖĞ£º
+  åœ¨è§†å›¾ä¸­ï¼š
   DataContext="{Binding Source={StaticResource Locator}, Path=ViewModelName}"
 
-  Èç¹ûĞèÒªÌí¼ÓÆäËûViewModelµÄÈë¿Ú£¬¿É²Î¿¼MainViewModelµÄÈçÏÂ´úÂë¡£
+  å¦‚æœéœ€è¦æ·»åŠ å…¶ä»–ViewModelçš„å…¥å£ï¼Œå¯å‚è€ƒMainViewModelçš„å¦‚ä¸‹ä»£ç ã€‚
 */
 
 using GalaSoft.MvvmLight;
@@ -30,8 +30,8 @@ namespace MvvmLearn.ViewModel
         public ViewModelLocator()
         {
             /*
-            * ·şÎñÆ÷¶¨Î»Æ÷£¨ServiceLocator£©Ö¸¶¨IOC
-            * ÒòÎªIOCµÄÊµÏÖÓĞ¶àÖÖ
+            * æœåŠ¡å™¨å®šä½å™¨ï¼ˆServiceLocatorï¼‰æŒ‡å®šIOC
+            * å› ä¸ºIOCçš„å®ç°æœ‰å¤šç§
             */
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
@@ -47,46 +47,79 @@ namespace MvvmLearn.ViewModel
             ////}
 
             /*
-            * IOCÀàËÆÒ»¸ö¶ÔÏóÈİÆ÷£¬
-            * ĞèÒªÏÈÒÀÀàĞÍ×¢²á£¬µ±Íâ²¿µ÷ÓÃĞèÒªÕâ¸öÀàĞÍµÄ¶ÔÏóÊ±£¬»á×Ô¶¯´´½¨¸ÃÊµÀı£¬²¢»º´æÆğÀ´£¬¹©ÔÙ´ÎÊ¹ÓÃ
+            * IOCç±»ä¼¼ä¸€ä¸ªå¯¹è±¡å®¹å™¨ï¼Œ
+            * éœ€è¦å…ˆä¾ç±»å‹æ³¨å†Œï¼Œå½“å¤–éƒ¨è°ƒç”¨éœ€è¦è¿™ä¸ªç±»å‹çš„å¯¹è±¡æ—¶ï¼Œä¼šè‡ªåŠ¨åˆ›å»ºè¯¥å®ä¾‹ï¼Œå¹¶ç¼“å­˜èµ·æ¥ï¼Œä¾›å†æ¬¡ä½¿ç”¨
             *
-            * ÕâÀïÊÇ½«MainViewModelÀàĞÍ×¢²á£¬ÒÔÔÚ½«À´Ìá¹©ÆäÊµÀı
+            * è¿™é‡Œæ˜¯å°†MainViewModelç±»å‹æ³¨å†Œï¼Œä»¥åœ¨å°†æ¥æä¾›å…¶å®ä¾‹
             */
+            SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<SimpleViewModel>();
+            SimpleIoc.Default.Register<AlbumViewModel>();
         }
 
         /// <summary>
-        /// MainViewModelµÄÊµÀıÒıÓÃÈë¿Ú
+        /// SimpleViewModelçš„å®ä¾‹å¼•ç”¨å…¥å£
         /// </summary>
         public SimpleViewModel Simple
         {
             get
             {
                 /*
-                * ServiceLocatorÒÑÖ¸¶¨SimpleIoc×÷ÎªIOCÀ´Öü´æ¶ÔÏóÊµÀı
+                * ServiceLocatorå·²æŒ‡å®šSimpleIocä½œä¸ºIOCæ¥è´®å­˜å¯¹è±¡å®ä¾‹
                 * 
-                * ÕâÀïÊÇ»ñÈ¡ÁËMainViewModelÖü´æÔÚIOCÖĞµÄÊµÀı
+                * è¿™é‡Œæ˜¯è·å–äº†SimpleViewModelè´®å­˜åœ¨IOCä¸­çš„å®ä¾‹
                 */
                 return ServiceLocator.Current.GetInstance<SimpleViewModel>();
             }
         }
 
         /// <summary>
-        /// MainViewModelµÄÊµÀıÒıÓÃÈë¿Ú
+        /// SimpleViewModelçš„å®ä¾‹å¼•ç”¨å…¥å£
         /// </summary>
         public SimpleViewModel Simple2
         {
             get
             {
                 /*
-                * ServiceLocatorÒÑÖ¸¶¨SimpleIoc×÷ÎªIOCÀ´Öü´æ¶ÔÏóÊµÀı
+                * ServiceLocatorå·²æŒ‡å®šSimpleIocä½œä¸ºIOCæ¥è´®å­˜å¯¹è±¡å®ä¾‹
                 * 
-                * ÕâÀïÊÇ»ñÈ¡ÁËMainViewModelÖü´æÔÚIOCÖĞµÄÊµÀı
+                * è¿™é‡Œæ˜¯è·å–äº†SimpleViewModelè´®å­˜åœ¨IOCä¸­çš„å®ä¾‹
                 */
                 return ServiceLocator.Current.GetInstance<SimpleViewModel>("Simple2");
             }
         }
 
+        /// <summary>
+        /// MainViewModelçš„å®ä¾‹å¼•ç”¨å…¥å£
+        /// </summary>
+        public MainViewModel Main
+        {
+            get
+            {
+                /*
+                * ServiceLocatorå·²æŒ‡å®šSimpleIocä½œä¸ºIOCæ¥è´®å­˜å¯¹è±¡å®ä¾‹
+                * 
+                * è¿™é‡Œæ˜¯è·å–äº†MainViewModelè´®å­˜åœ¨IOCä¸­çš„å®ä¾‹
+                */
+                return ServiceLocator.Current.GetInstance<MainViewModel>();
+            }
+        }
+
+        /// <summary>
+        /// AlbumViewModelçš„å®ä¾‹å¼•ç”¨å…¥å£
+        /// </summary>
+        public AlbumViewModel Album
+        {
+            get
+            {
+                /*
+                * ServiceLocatorå·²æŒ‡å®šSimpleIocä½œä¸ºIOCæ¥è´®å­˜å¯¹è±¡å®ä¾‹
+                * 
+                * è¿™é‡Œæ˜¯è·å–äº†AlbumViewModelè´®å­˜åœ¨IOCä¸­çš„å®ä¾‹
+                */
+                return ServiceLocator.Current.GetInstance<AlbumViewModel>();
+            }
+        }
         public static void Cleanup()
         {
             // TODO Clear the ViewModels

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MvvmPractice.Views;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,20 @@ namespace MvvmPractice
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void OpenNoteBookEdit_Click(object sender, RoutedEventArgs e)
+        {
+            var noteBookEditView = new NoteBookEditView();
+            noteBookEditView.Owner = this;
+            noteBookEditView.ShowDialog();
+        }
+
+        private void OpenNoteEdit_Click(object sender, RoutedEventArgs e)
+        {
+            var noteEditView = new NoteEditView();
+            noteEditView.Owner = this;
+            noteEditView.ShowDialog();
         }
     }
 }

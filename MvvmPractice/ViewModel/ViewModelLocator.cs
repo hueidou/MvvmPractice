@@ -53,6 +53,8 @@ namespace MvvmPractice.ViewModel
             * 这里是将MainViewModel类型注册，以在将来提供其实例
             */
             SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<NoteBookViewModel>();
+            SimpleIoc.Default.Register<NoteViewModel>();
         }
 
         /// <summary>
@@ -68,6 +70,38 @@ namespace MvvmPractice.ViewModel
                 * 这里是获取了MainViewModel贮存在IOC中的实例
                 */
                 return ServiceLocator.Current.GetInstance<MainViewModel>();
+            }
+        }
+
+        /// <summary>
+        /// MainViewModel的实例引用入口
+        /// </summary>
+        public NoteBookViewModel NoteBook
+        {
+            get
+            {
+                /*
+                * ServiceLocator已指定SimpleIoc作为IOC来贮存对象实例
+                * 
+                * 这里是获取了MainViewModel贮存在IOC中的实例
+                */
+                return ServiceLocator.Current.GetInstance<NoteBookViewModel>();
+            }
+        }
+
+        /// <summary>
+        /// NoteViewModel的实例引用入口
+        /// </summary>
+        public NoteViewModel Note
+        {
+            get
+            {
+                /*
+                * ServiceLocator已指定SimpleIoc作为IOC来贮存对象实例
+                * 
+                * 这里是获取了NoteViewModel贮存在IOC中的实例
+                */
+                return ServiceLocator.Current.GetInstance<NoteViewModel>();
             }
         }
 
