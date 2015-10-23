@@ -45,9 +45,15 @@
         <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource title}">笔记本列表</TextBlock>
         <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource title}">笔记列表</TextBlock>
 
-        <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding CurrentNoteBook.Name, StringFormat=当前选中：{0}}"></TextBlock>
-        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding CurrentNote.Title, StringFormat=当前选中：{0}}"></TextBlock>
+        <StackPanel Grid.Row="1" Grid.Column="0">
+            <TextBlock Text="{Binding NoteBooks.Count, StringFormat=Count：{0}}"></TextBlock>
+            <TextBlock Text="{Binding CurrentNoteBook.Name, StringFormat=当前选中：{0}}"></TextBlock>
+        </StackPanel>
 
+        <StackPanel Grid.Row="1" Grid.Column="1">
+            <TextBlock Text="{Binding CurrentNoteBook.Notes.Count, StringFormat=Count：{0}}"></TextBlock>
+            <TextBlock Text="{Binding CurrentNote.Title, StringFormat=当前选中：{0}}"></TextBlock>
+        </StackPanel>
 
         <!-- 左侧笔记本列表 -->
         <ListBox x:Name="listBox" Grid.Row="2" Grid.Column="0" 
