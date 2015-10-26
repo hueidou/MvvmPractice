@@ -70,8 +70,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converter\ObjectToBooleanConverter.cs" />
+    <Compile Include="Design\DesignDataService.cs" />
     <Compile Include="Messages\NoteEditMessage.cs" />
     <Compile Include="Messages\NoteBookEditMessage.cs" />
+    <Compile Include="Model\DataItem.cs" />
+    <Compile Include="Model\DataService.cs" />
+    <Compile Include="Model\IDataService.cs" />
     <Compile Include="Model\Note.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\NoteBookViewModel.cs" />
